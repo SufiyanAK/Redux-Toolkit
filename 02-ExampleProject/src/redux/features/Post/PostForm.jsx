@@ -1,14 +1,18 @@
-import { Button, FormControl, FormLabel, Stack, TextField, Typography } from '@mui/material';
+import { Button, FormControl, FormLabel, MenuItem, Stack, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPosts } from './postSlice';
+import { userStates } from '../User/userSlice';
 
 
 
 export const PostForm = () => {
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
+    const [userName, setUserName] = useState('')
     const [errors, setErrors] = useState({})
+
+    const users = useSelector(userStates)
 
     const dispatch = useDispatch()
 
@@ -21,18 +25,19 @@ export const PostForm = () => {
     const handleSubmit = (e) => {
         e.preventDefault()
 
-        setErrors({ title: !title, content: !content })
+        setErrors({ title: !title, content: !content, userName: !userName })
 
-        if (!title.trim() || !content.trim()) {
+        if (!title.trim() || !content.trim() || !userName) {
             return console.log({ message: 'All Fields are Required' });
         }
 
 
 
-        dispatch(addPosts(title, content))
+        dispatch(addPosts(title, content, userName))
 
         setTitle('')
         setContent('')
+        setUserName('')
     }
 
     return (
@@ -51,6 +56,24 @@ export const PostForm = () => {
                             error={errors.title}
                             helperText={errors.title ? 'Title is required' : ''}
                         />
+                    </FormControl>
+                    <FormControl>
+                        <FormLabel sx={{ fontWeight: 'bold' }}>Select User:</FormLabel>
+                        <TextField
+                            select
+                            value={userName}
+                            name='user'
+                            size='small'
+                            onChange={(e) => handleChange(e, setUserName)}
+                            error={errors.title}
+                            helperText={errors.title ? 'User is required' : ''}
+                        >
+                            {
+                                users.map((user) => (
+                                    <MenuItem key={user.id} value={user.userName}>{user.userName}</MenuItem>
+                                ))
+                            }
+                        </TextField>
                     </FormControl>
                     <FormControl>
                         <FormLabel sx={{ fontWeight: 'bold' }}>Content:</FormLabel>
