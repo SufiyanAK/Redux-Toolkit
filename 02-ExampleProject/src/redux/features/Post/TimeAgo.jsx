@@ -16,7 +16,7 @@ export const TimeAgo = ({ timestamps }) => {
     return (
         <>
             <Typography variant="span">
-                & nbsp: {timeAgo}
+                &nbsp; {timeAgo}
             </Typography>
         </>
     )

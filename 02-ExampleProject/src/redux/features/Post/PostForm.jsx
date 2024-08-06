@@ -31,8 +31,6 @@ export const PostForm = () => {
             return console.log({ message: 'All Fields are Required' });
         }
 
-
-
         dispatch(addPosts(title, content, userName))
 
         setTitle('')

@@ -4,9 +4,6 @@ import { Typography } from '@mui/material'
 
 export const PostAuther = ({ userName }) => {
     const users = useSelector(userStates)
-    console.log(userName);
-
-
 
     const author = users.find(user => user.userName === userName)
 
