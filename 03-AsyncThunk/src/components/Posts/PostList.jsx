@@ -22,7 +22,7 @@ export const PostList = () => {
     } else if (postsStatus === 'succeeded') {
         const orderedPost = posts.slice().sort((a, b) => b.date.localeCompare(a.date))
         content = orderedPost.map((post) => (
-            <PostExcerpt key={post.id} post={post} />
+            <PostExcerpt key={post.date} post={post} />
         ))
     } else if (postsStatus === 'error') {
         content = <Typography>{postsError}</Typography>
@@ -32,7 +32,7 @@ export const PostList = () => {
     return (
         <>
             <Typography variant='h4'>Post List</Typography>
-            <Stack>
+            <Stack spacing={4}>
                 {content}
             </Stack>
         </>
